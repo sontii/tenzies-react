@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #002266;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  font-family: 'Karla', sans-serif;
+}
+
+main {
+  background-color: whitesmoke;
+  width: 500px;
+  height: 80vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.title {
+    font-size: 40px;
+    margin: 0;
+}
+
+.instructions {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 0;
+    text-align: center;
+}
+
+.dice-container {
+  display: grid;
+  grid-template: auto auto / repeat(5, 1fr);
+  gap: 20px;
+  padding-bottom: 30px;
+}
+
+
+.roll {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5035FF;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+
+.dice {
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+
+.face{
+height: 100%;
+  width: 100%;
+  background: whitesmoke;
+  border: 2px solid black;
+  border-radius: 5px;
+  position: absolute;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.one::before{
+    content: '';
+    width: 20%;
+    height: 20%;
+    background: black;
+    border-radius: 50%;
+}
+
+.two::before {
+  content: '';
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  box-shadow: black -20px -20px 0px 0px,
+    black 20px 20px 0px 0px;
+}
+
+.three::before {
+  content: '';
+  width: 20%;
+  height: 20%;
+  background: black;
+  border-radius: 50%;
+  box-shadow: black -20px -20px 0px 0px,
+    black 20px 20px 0px 0px;
+}
+
+.four::before {
+  content: '';
+  width: 20%;
+  height: 20%;  
+  border-radius: 50%;
+  box-shadow: black -20px -20px 0px 0px,
+    black -20px 20px 0px 0px, black 20px -20px 0px 0px,
+    black 20px 20px 0px 0px;
+}
+
+.five::before {
+  content: '';
+  width: 20%;
+  height: 20%;
+  background: black;
+  border-radius: 50%;
+  box-shadow:black -20px -20px 0px 0px,
+    black -20px 20px 0px 0px, black 20px -20px 0px 0px,
+    black 20px 20px 0px 0px;
+}
+
+.six::before {
+  content: '';
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  box-shadow: black -20px -20px 0px 0px, black -20px 0px 0px 0px,
+    black -20px 20px 0px 0px, black 20px -20px 0px 0px, black 20px 0px 0px 0px,
+    black 20px 20px 0px 0px;
+}
