@@ -12,8 +12,7 @@ export default function App() {
 	const [countRoll, setCountRoll] = React.useState(0)
 	const [time, setTime] = React.useState(0);
 	const [running, setRunning] = React.useState(false);
-	const [bestTime, setBestTime] = React.useState(
-		JSON.parse(localStorage.getItem("bestTime")) || []
+	const [bestTime, setBestTime] = React.useState(localStorage.getItem("bestTime") || 0
 	);
 	
 
@@ -30,10 +29,10 @@ export default function App() {
 	}, [running]);
 
 	React.useEffect(() => {
-		if (time < bestTime[0]) {
-			localStorage.setItem("bestTime", JSON.stringify(time));
+		if (parseInt(bestTime) === 0 || time < parseInt(bestTime)) {
+			localStorage.setItem("bestTime", time);
 		}
-	}, [time]);
+	}, [bestTime]);
 
 	React.useEffect(() => {
 		const everyHeld = dice.every(die => die.isHeld)
@@ -43,9 +42,9 @@ export default function App() {
 		if (everyHeld && everyEqual) {
 		setTenzies(true)
 		setRunning(false)
-		if (time < bestTime || bestTime.length < 0) {
-			setBestTime([time]);
-		}
+		if (parseInt(bestTime) === 0 || time < parseInt(bestTime)) {
+			setBestTime(time);
+			}
 		}
 	}, [dice]);
 
@@ -89,10 +88,6 @@ export default function App() {
 		setCountRoll(0)
 		setTime(0)
 		}
-		if (time < bestTime[0] || bestTime.length < 0) {
-			setBestTime(time);
-		}
-		console.log("ok", bestTime[0], time);
 	}
 
 
@@ -136,14 +131,14 @@ export default function App() {
 					<span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
 				</div>
 			</div>
-			{bestTime.length > 0 ? <div className="timer">
+			{bestTime !== 0 ? <div className="timer">
 				<div className="numbers">
 					<span> Best time: </span>
 					<span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
 					<span>{("0" + Math.floor((bestTime / 1000) % 60)).slice(-2)}:</span>
 					<span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span>
 				</div>
-			</div> :<div></div>}
+			</div> : null}
 		</main>
 	);
 };
