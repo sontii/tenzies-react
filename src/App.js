@@ -7,11 +7,15 @@ import Confetti from "react-confetti";
 
 export default function App() {
 
-  const [dice, setDice] = React.useState(generateDice())
-  const [tenzies, setTenzies] = React.useState(false)
-  const [countRoll, setCountRoll] = React.useState(0)
-  const [time, setTime] = React.useState(0);
+	const [dice, setDice] = React.useState(generateDice())
+	const [tenzies, setTenzies] = React.useState(false)
+	const [countRoll, setCountRoll] = React.useState(0)
+	const [time, setTime] = React.useState(0);
 	const [running, setRunning] = React.useState(false);
+	const [bestTime, setBestTime] = React.useState(
+		JSON.parse(localStorage.getItem("bestTime")) || []
+	);
+	
 
 	React.useEffect(() => {
 		let interval;
@@ -25,63 +29,75 @@ export default function App() {
 		return () => clearInterval(interval);
 	}, [running]);
 
+	React.useEffect(() => {
+		if (time < bestTime[0]) {
+			localStorage.setItem("bestTime", JSON.stringify(time));
+		}
+	}, [time]);
 
-  React.useEffect(() => {
-    const everyHeld = dice.every(die => die.isHeld)
-    const firstValue = dice[0].value
-    const everyEqual = dice.every(die => die.value === firstValue)
+	React.useEffect(() => {
+		const everyHeld = dice.every(die => die.isHeld)
+		const firstValue = dice[0].value
+		const everyEqual = dice.every(die => die.value === firstValue)
 
-    if (everyHeld && everyEqual) {
-      setTenzies(true)
-      setRunning(false)
-    }
-  }, [dice]);
-
-
-  function generateDice() {
-    const newArray = [];
-		for (let i = 0; i < 10; i++)
-			newArray.push(
-				generateDie()
-			);
-		return newArray;
-  }
-
-  function generateDie() {
-     const newDie = {
-				id: nanoid(),
-				value: Math.ceil(Math.random() * 6),
-        isHeld: false
-			}
-      return newDie
-  }
-
-  function holdDice(id) {
-    setDice((oldDice) => 
-      oldDice.map((die) => {
-      return die.id === id ?
-       {...die, isHeld: !die.isHeld} : die
-    }))
-    setRunning(true)
-  }
-  
-  function handleRoll() {
-    if (!tenzies) {
-      setCountRoll(countRoll + 1);
-      setDice(oldDie => oldDie.map(die => {
-        return die.isHeld ? die : generateDie()
-      }))
-    } else {
-      setTenzies(false)
-      setDice(generateDice())
-      setCountRoll(0)
-      setTime(0)
-    }
-  }
+		if (everyHeld && everyEqual) {
+		setTenzies(true)
+		setRunning(false)
+		if (time < bestTime || bestTime.length > 0) {
+			setBestTime([time]);
+		}
+		}
+	}, [dice]);
 
 
-  // use this for integer value in dice face
-  const diceElements = dice.map((die) => (
+	function generateDice() {
+		const newArray = [];
+			for (let i = 0; i < 10; i++)
+				newArray.push(
+					generateDie()
+				);
+			return newArray;
+	}
+
+	function generateDie() {
+		const newDie = {
+					id: nanoid(),
+					value: Math.ceil(Math.random() * 6),
+			isHeld: false
+				}
+		return newDie
+	}
+
+	function holdDice(id) {
+		setDice((oldDice) => 
+		oldDice.map((die) => {
+		return die.id === id ?
+		{...die, isHeld: !die.isHeld} : die
+		}))
+		setRunning(true)
+	}
+
+	function handleRoll() {
+		if (!tenzies) {
+		setCountRoll(countRoll + 1);
+		setDice(oldDie => oldDie.map(die => {
+			return die.isHeld ? die : generateDie()
+		}))
+		} else {
+		setTenzies(false)
+		setDice(generateDice())
+		setCountRoll(0)
+		setTime(0)
+		}
+		if (time < bestTime[0] || bestTime.length > 0) {
+			setBestTime([time]);
+		}
+		console.log("ok", bestTime[0], time);
+	}
+
+
+	// use this for integer value in dice face
+	const diceElements = dice.map((die) => (
 		<Die
 			key={die.id}
 			value={die.value}
@@ -90,7 +106,7 @@ export default function App() {
 		/>
 	));
 
-  const diceElementsDot = dice.map((die) => (
+	const diceElementsDot = dice.map((die) => (
 		<Diedot
 			key={die.id}
 			value={die.value}
@@ -99,7 +115,7 @@ export default function App() {
 		/>
 	));
 
-  return (
+	return (
 		<main>
 			{tenzies && <Confetti />}
 			<h1 className="title">Tenzies</h1>
@@ -120,6 +136,14 @@ export default function App() {
 					<span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
 				</div>
 			</div>
+			{bestTime.length > 0 ? <div className="timer">
+				<div className="numbers">
+					<span> Best time: </span>
+					<span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
+					<span>{("0" + Math.floor((bestTime / 1000) % 60)).slice(-2)}:</span>
+					<span>{("0" + ((bestTime / 10) % 100)).slice(-2)}</span>
+				</div>
+			</div> :<div></div>}
 		</main>
 	);
 };
