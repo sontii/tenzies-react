@@ -131,7 +131,7 @@ export default function App() {
 					<span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
 				</div>
 			</div>
-			{bestTime !== 0 ? <div className="timer">
+			{parseInt(bestTime) !== 0 ? <div className="timer">
 				<div className="numbers">
 					<span> Best time: </span>
 					<span>{("0" + Math.floor((bestTime / 60000) % 60)).slice(-2)}:</span>
