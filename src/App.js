@@ -43,7 +43,7 @@ export default function App() {
 		if (everyHeld && everyEqual) {
 		setTenzies(true)
 		setRunning(false)
-		if (time < bestTime || bestTime.length > 0) {
+		if (time < bestTime || bestTime.length < 0) {
 			setBestTime([time]);
 		}
 		}
@@ -89,8 +89,8 @@ export default function App() {
 		setCountRoll(0)
 		setTime(0)
 		}
-		if (time < bestTime[0] || bestTime.length > 0) {
-			setBestTime([time]);
+		if (time < bestTime[0] || bestTime.length < 0) {
+			setBestTime(time);
 		}
 		console.log("ok", bestTime[0], time);
 	}
