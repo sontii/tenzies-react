@@ -5,9 +5,6 @@
 body {
   margin: 0;
   background-color: #002266;
-  display: flex;
-  justify-content: center;
-  padding: 50px;
   font-family: 'Karla', sans-serif;
 }
 
@@ -21,6 +18,7 @@ main {
   justify-content: space-around;
   align-items: center;
   padding: 20px 30px;
+  margin: 50px auto auto;
 }
 
 .title {
