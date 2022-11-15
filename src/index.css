@@ -14,7 +14,7 @@ body {
 main {
   background-color: whitesmoke;
   width: 500px;
-  height: 80vh;
+  height: 600px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -130,4 +130,21 @@ height: 100%;
   box-shadow: black -20px -20px 0px 0px, black -20px 0px 0px 0px,
     black -20px 20px 0px 0px, black 20px -20px 0px 0px, black 20px 0px 0px 0px,
     black 20px 20px 0px 0px;
+}
+
+.timer{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.stopper-timer{
+  padding: 3px;
+}
+
+.best--timer{
+  background-color: #5035FF;
+  color: white;
+  border-radius: 5px;
+  padding: 3px;
 }
